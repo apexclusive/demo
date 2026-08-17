@@ -311,45 +311,57 @@
 
     .intro-mark {
       position: relative;
-      width: 86px;
-      height: 86px;
-      display: grid;
-      place-items: center;
+      width: 96px;
+      height: 96px;
       margin: 0 auto 1rem auto;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #f8e2b0 0%, var(--gold) 25%, #b68a36 64%, #6a4b1f 100%);
-      color: #111;
-      font-size: 2.2rem;
-      font-weight: 800;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.22), 0 16px 36px rgba(212,175,103,0.28);
-      overflow: hidden;
-      isolation: isolate;
+      animation: dropletFall 2.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
     }
 
-    .intro-mark::before,
+    .intro-mark::before {
+      content: "";
+      position: absolute;
+      inset: 8px 10px 0 10px;
+      width: 76px;
+      height: 64px;
+      background: radial-gradient(ellipse 45% 50% at 50% 40%, rgba(149, 210, 232, 0.95), rgba(82, 155, 189, 0.85) 35%, rgba(35, 97, 138, 0.9));
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow:
+        inset -3px -3px 8px rgba(0,0,0,0.15),
+        inset 2px 2px 6px rgba(255,255,255,0.28),
+        0 0 24px rgba(149, 210, 232, 0.4),
+        0 8px 32px rgba(35, 97, 138, 0.3);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+
     .intro-mark::after {
       content: "";
       position: absolute;
-      inset: 8px;
+      inset: 50%;
+      width: 80px;
+      height: 80px;
+      margin: -40px 0 0 -40px;
       border-radius: 50%;
-      border: 1.4px solid rgba(255,255,255,0.7);
-      border-top-color: transparent;
-      border-bottom-color: rgba(255,255,255,0.52);
-      animation: logoRipple 2.8s ease-in-out infinite;
-    }
-
-    .intro-mark::after {
-      inset: 18px;
-      border-color: rgba(255,255,255,0.4);
-      border-left-color: transparent;
-      border-right-color: transparent;
-      animation-delay: 0.8s;
+      background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+      animation: waterSplash 2s ease-out 1.8s infinite;
     }
 
     @keyframes logoRipple {
       0% { transform: scale(0.85); opacity: 0.1; }
       30% { opacity: 0.8; }
       100% { transform: scale(1.18); opacity: 0.2; }
+    }
+
+    @keyframes dropletFall {
+      0% { transform: translateY(-24px) scale(1.0); opacity: 1; }
+      50% { opacity: 1; }
+      100% { transform: translateY(0) scale(1.0); opacity: 1; }
+    }
+
+    @keyframes waterSplash {
+      0% { transform: scale(0.6); opacity: 0; }
+      45% { opacity: 1; transform: scale(1.2); }
+      100% { transform: scale(1.4); opacity: 0; }
     }
 
     .intro-text {
@@ -597,31 +609,53 @@
     }
 
     .luxury-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(245,239,232,0.82));
+      position: relative;
+      min-height: 280px;
       border: 1px solid rgba(212,175,103,0.24);
-      padding: 1.5rem;
       border-radius: 24px;
       box-shadow: 0 18px 38px rgba(12,12,14,0.08);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, filter 0.28s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .luxury-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42));
+      z-index: 1;
     }
 
     .luxury-card:hover {
       transform: translateY(-6px);
       border-color: rgba(212,175,103,0.38);
       box-shadow: 0 24px 46px rgba(12,12,14,0.12);
+      filter: saturate(1.05);
     }
 
     .luxury-card h3 {
       font-size: clamp(1.8rem, 2vw, 2.3rem);
       margin-bottom: 0.6rem;
-      color: #171612;
+      color: #f9f3e8;
       line-height: 1;
+      position: relative;
+      z-index: 2;
+      font-weight: 800;
     }
 
     .luxury-card p {
-      color: rgba(25, 22, 18, 0.72);
+      color: rgba(255,255,255,0.84);
       font-size: 1rem;
       line-height: 1.8;
+      position: relative;
+      z-index: 2;
     }
 
     .trust-strip {
@@ -639,7 +673,7 @@
       text-align: center;
       border-radius: 18px;
       background-size: cover;
-      background-position: center;
+      background-position: center center;
       background-repeat: no-repeat;
       border: 1px solid rgba(212,175,103,0.25);
       box-shadow: 0 12px 28px rgba(19,19,20,0.06);
@@ -648,7 +682,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, background-size 0.8s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
       background-color: rgba(255,255,255,0.81);
     }
 
@@ -848,7 +882,7 @@
 
     .card-visual {
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)),
-                  url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg') center/cover no-repeat;
+                  url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg') center 58% / cover no-repeat;
       height: 420px;
       border-radius: 22px;
       position: relative;
@@ -1057,16 +1091,17 @@
       overflow: hidden;
       border: 1px solid rgba(212,175,103,0.18);
       box-shadow: 0 18px 32px rgba(0,0,0,0.08);
-      background-size: 100%;
-      background-position: center;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       animation: floatCard 9s ease-in-out infinite;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, background-size 0.8s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
     }
 
     .portfolio-card:hover {
-      transform: translateY(-6px) scale(1.02);
+      transform: translateY(-6px) scale(1.01);
       box-shadow: 0 24px 42px rgba(0,0,0,0.14);
-      background-size: 110%;
+      filter: saturate(1.06) contrast(1.02);
     }
 
     .portfolio-card::before {
@@ -1139,7 +1174,7 @@
     .showcase-visual {
       min-height: 470px;
       background: linear-gradient(135deg, rgba(0, 0, 0, 0.16), rgba(0,0,0,0.3)),
-                  url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg') center/cover no-repeat;
+                  url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg') center 48% / cover no-repeat;
       position: relative;
     }
 
@@ -1271,7 +1306,7 @@
     .proposal-visual {
       background:
         linear-gradient(180deg, rgba(17,17,18,0.15), rgba(17,17,18,0.55)),
-        url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg') center/cover no-repeat;
+        url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg') center 52% / cover no-repeat;
       position: relative;
     }
 
@@ -1581,7 +1616,7 @@
 <body>
   <div class="intro-overlay" id="introOverlay">
     <div class="intro-panel">
-      <div class="intro-mark">V</div>
+      <div class="intro-mark"></div>
       <div class="intro-text">Van Rooijen</div>
       <h2>Hier begint uw zomerse ontspanning.</h2>
     </div>
@@ -1705,19 +1740,19 @@
         </div>
 
         <div class="portfolio-strip">
-          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2020/03/IMG-20191220-WA0008-1.jpeg');">
+          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2020/03/IMG-20191220-WA0008-1.jpeg'); background-position: center 58%;">
             <div class="portfolio-copy">
               <span class="portfolio-label">Project Maastricht</span>
               <h4>Moderne villa met architectonisch zwembad</h4>
             </div>
           </article>
-          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190904_112833.jpg');">
+          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190904_112833.jpg'); background-position: center 42%;">
             <div class="portfolio-copy">
               <span class="portfolio-label">Project Limburg</span>
               <h4>Luxe wellnessruimte aan huis</h4>
             </div>
           </article>
-          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg');">
+          <article class="portfolio-card" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg'); background-position: center 50%;">
             <div class="portfolio-copy">
               <span class="portfolio-label">Project Villa</span>
               <h4>Zwembad als verlengstuk van de tuin</h4>
@@ -1726,10 +1761,10 @@
         </div>
 
         <div class="trust-strip">
-          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg');"><strong>Volledig maatwerk</strong><span>op maat</span></div>
-          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190904_112833.jpg');"><strong>Persoonlijk</strong><span>begeleiding</span></div>
-          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2020/03/IMG-20191220-WA0008-1.jpeg');"><strong>Premium</strong><span>materialen</span></div>
-          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg');"><strong>Complete</strong><span>realisatie</span></div>
+          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190508_204620.jpg'); background-position: center 58%;"><strong>Volledig maatwerk</strong><span>op maat</span></div>
+          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20190904_112833.jpg'); background-position: center 36%;"><strong>Persoonlijk</strong><span>begeleiding</span></div>
+          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2020/03/IMG-20191220-WA0008-1.jpeg'); background-position: center 52%;"><strong>Premium</strong><span>materialen</span></div>
+          <div class="trust-item" style="background-image: url('https://vanrooijenzwembaden.nl/wp-content/uploads/2019/11/20191109_153928.jpg'); background-position: center 64%;"><strong>Complete</strong><span>realisatie</span></div>
         </div>
       </div>
     </section>
